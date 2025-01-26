@@ -1,1 +1,1 @@
-# Medique---Hospital-Appointment-Management-and-Healthcare-Assistance
+# Medique-Hospital-Appointment-Management-and-Healthcare-Assistance
