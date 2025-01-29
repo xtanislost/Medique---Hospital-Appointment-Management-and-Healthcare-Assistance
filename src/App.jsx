@@ -32,4 +32,4 @@ const App = () => {
   )
 }
 
-export default App //vatan
+export default App 
