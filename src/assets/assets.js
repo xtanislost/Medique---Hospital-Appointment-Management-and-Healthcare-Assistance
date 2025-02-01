@@ -88,212 +88,212 @@ export const specialityData = [
 export const doctors = [
     {
         _id: 'doc1',
-        name: 'Dr. Richard James',
+        name: 'Dr. Rajesh Sharma',
         image: doc1,
-        speciality: 'General physician',
+        speciality: 'General Physician',
         degree: 'MBBS',
         experience: '4 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+        about: 'Dr. Sharma has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
         fees: 50,
         address: {
             line1: '17th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line2: 'Circle, Ring Road, Mumbai'
         }
     },
     {
         _id: 'doc2',
-        name: 'Dr. Emily Larson',
+        name: 'Dr. Priya Mehta',
         image: doc2,
         speciality: 'Gynecologist',
         degree: 'MBBS',
         experience: '3 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+        about: 'Dr. Mehta is dedicated to providing top-notch gynecological care with a focus on women’s health, preventive screenings, and personalized treatment plans.',
         fees: 60,
         address: {
             line1: '27th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line2: 'Circle, Ring Road, Delhi'
         }
     },
     {
         _id: 'doc3',
-        name: 'Dr. Sarah Patel',
+        name: 'Dr. Chaitanya Iyer',
         image: doc3,
         speciality: 'Dermatologist',
         degree: 'MBBS',
-        experience: '1 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+        experience: '1 Year',
+        about: 'Dr. Iyer specializes in skincare and dermatological treatments, with a focus on early diagnosis and customized skincare regimens.',
         fees: 30,
         address: {
             line1: '37th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line2: 'Circle, Ring Road, Bangalore'
         }
     },
     {
         _id: 'doc4',
-        name: 'Dr. Christopher Lee',
+        name: 'Dr. Arjun Nair',
         image: doc4,
-        speciality: 'Pediatricians',
+        speciality: 'Pediatrician',
         degree: 'MBBS',
         experience: '2 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+        about: 'Dr. Nair provides compassionate pediatric care, focusing on child health, nutrition, and preventive medical strategies.',
         fees: 40,
         address: {
             line1: '47th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line2: 'Circle, Ring Road, Hyderabad'
         }
     },
     {
         _id: 'doc5',
-        name: 'Dr. Jennifer Garcia',
+        name: 'Dr. Kavita Deshmukh',
         image: doc5,
         speciality: 'Neurologist',
         degree: 'MBBS',
         experience: '4 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+        about: 'Dr. Deshmukh is an expert in neurological disorders, focusing on early intervention, personalized treatment, and research-driven care.',
         fees: 50,
         address: {
             line1: '57th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line2: 'Circle, Ring Road, Pune'
         }
     },
     {
         _id: 'doc6',
-        name: 'Dr. Andrew Williams',
+        name: 'Dr. Rohan Verma',
         image: doc6,
         speciality: 'Neurologist',
         degree: 'MBBS',
         experience: '4 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+        about: 'Dr. Verma is committed to providing top-quality neurological care with a patient-centered approach.',
         fees: 50,
         address: {
             line1: '57th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line2: 'Circle, Ring Road, Chennai'
         }
     },
     {
         _id: 'doc7',
-        name: 'Dr. Christopher Davis',
+        name: 'Dr. Sandeep Khanna',
         image: doc7,
-        speciality: 'General physician',
+        speciality: 'General Physician',
         degree: 'MBBS',
         experience: '4 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+        about: 'Dr. Khanna focuses on preventive medicine and effective treatment strategies for general health concerns.',
         fees: 50,
         address: {
             line1: '17th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line2: 'Circle, Ring Road, Jaipur'
         }
     },
     {
         _id: 'doc8',
-        name: 'Dr. Timothy White',
+        name: 'Dr. Rajeev Kapoor',
         image: doc8,
         speciality: 'Gynecologist',
         degree: 'MBBS',
         experience: '3 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+        about: 'Dr. Kapoor specializes in women’s health, pregnancy care, and reproductive wellness.',
         fees: 60,
         address: {
             line1: '27th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line2: 'Circle, Ring Road, Kolkata'
         }
     },
     {
         _id: 'doc9',
-        name: 'Dr. Ava Mitchell',
+        name: 'Dr. Aisha Siddiqui',
         image: doc9,
         speciality: 'Dermatologist',
         degree: 'MBBS',
-        experience: '1 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+        experience: '1 Year',
+        about: 'Dr. Siddiqui provides expert skin care treatments with a focus on preventive and cosmetic dermatology.',
         fees: 30,
         address: {
             line1: '37th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line2: 'Circle, Ring Road, Lucknow'
         }
     },
     {
         _id: 'doc10',
-        name: 'Dr. Jeffrey King',
+        name: 'Dr. Kunal Agarwal',
         image: doc10,
-        speciality: 'Pediatricians',
+        speciality: 'Pediatrician',
         degree: 'MBBS',
         experience: '2 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+        about: 'Dr. Agarwal provides comprehensive pediatric care, focusing on child health and developmental well-being.',
         fees: 40,
         address: {
             line1: '47th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line2: 'Circle, Ring Road, Chandigarh'
         }
     },
     {
         _id: 'doc11',
-        name: 'Dr. Zoe Kelly',
+        name: 'Dr. Megha Joshi',
         image: doc11,
         speciality: 'Neurologist',
         degree: 'MBBS',
         experience: '4 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+        about: 'Dr. Joshi specializes in treating neurological conditions with a patient-focused approach.',
         fees: 50,
         address: {
             line1: '57th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line2: 'Circle, Ring Road, Bhopal'
         }
     },
     {
         _id: 'doc12',
-        name: 'Dr. Patrick Harris',
+        name: 'Dr. Harish Menon',
         image: doc12,
         speciality: 'Neurologist',
         degree: 'MBBS',
         experience: '4 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+        about: 'Dr. Menon is dedicated to providing advanced neurological treatments with a focus on research-based approaches.',
         fees: 50,
         address: {
             line1: '57th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line2: 'Circle, Ring Road, Kochi'
         }
     },
     {
         _id: 'doc13',
-        name: 'Dr. Chloe Evans',
+        name: 'Dr. Radhika Saxena',
         image: doc13,
         speciality: 'Gastroenterologist',
         degree: 'MBBS',
         experience: '4 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+        about: 'Dr. Saxena specializes in digestive health, gut disorders, and preventive gastroenterology.',
         fees: 50,
         address: {
             line1: '17th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line2: 'Circle, Ring Road, Ahmedabad'
         }
     },
     {
         _id: 'doc14',
-        name: 'Dr. Ryan Martinez',
+        name: 'Dr. Rahul Malhotra',
         image: doc14,
         speciality: 'Gynecologist',
         degree: 'MBBS',
         experience: '3 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+        about: 'Dr. Malhotra is an expert in gynecological treatments, prenatal care, and reproductive health.',
         fees: 60,
         address: {
             line1: '27th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line2: 'Circle, Ring Road, Surat'
         }
     },
     {
         _id: 'doc15',
-        name: 'Dr. Amelia Hill',
+        name: 'Dr. Simran Kaur',
         image: doc15,
         speciality: 'Dermatologist',
         degree: 'MBBS',
-        experience: '1 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+        experience: '1 Year',
+        about: 'Dr. Kaur provides expert dermatological care with a focus on skincare, hair treatments, and cosmetic procedures.',
         fees: 30,
         address: {
             line1: '37th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line2: 'Circle, Ring Road, Amritsar'
         }
     },
-]
+];
