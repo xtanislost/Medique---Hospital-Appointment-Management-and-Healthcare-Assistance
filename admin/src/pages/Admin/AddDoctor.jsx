@@ -122,7 +122,7 @@ const AddDoctor = () => {
                                 <option value="8 Year">8 Years</option>
                                 <option value="9 Year">9 Years</option>
                                 <option value="10 Year">10 Years</option>
-                            </select>
+                                </select>
                         </div>
 
                         <div className='flex-1 flex flex-col gap-1'>
