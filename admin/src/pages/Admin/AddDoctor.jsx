@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
-
 import { assets } from '../../assets/assets'
 import { toast } from 'react-toastify'
+import axios from 'axios'
 import { AdminContext } from '../../context/AdminContext'
 import { AppContext } from '../../context/AppContext'
 
@@ -44,16 +44,12 @@ const AddDoctor = () => {
             formData.append('degree', degree)
             formData.append('address', JSON.stringify({ line1: address1, line2: address2 }))
 
-        
-
-          const data = response.data; // Extract data properly
-
             // console log formdata            
             formData.forEach((value, key) => {
                 console.log(`${key}: ${value}`);
             });
 
-            
+            const { data } = await axios.post(backendUrl + '/api/admin/add-doctor', formData, { headers: { aToken } })
             if (data.success) {
                 toast.success(data.message)
                 setDocImg(false)
@@ -122,7 +118,7 @@ const AddDoctor = () => {
                                 <option value="8 Year">8 Years</option>
                                 <option value="9 Year">9 Years</option>
                                 <option value="10 Year">10 Years</option>
-                                </select>
+                            </select>
                         </div>
 
                         <div className='flex-1 flex flex-col gap-1'>
