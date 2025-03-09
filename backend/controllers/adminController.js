@@ -80,4 +80,19 @@ const addDoctor = async (req,res) => {
 
 }
 
-export {addDoctor,loginAdmin};
+//API TO GET ALL DOCTORS LIST FOR ADMIN PANEL 
+
+const allDoctors = async (req , res) => {
+
+    try {
+
+        const doctors = await doctorModel.find({}).select('-password')
+        res.json({sucess:false,message:error.message})
+        
+    } catch (error) {
+        
+    }
+}
+
+    
+export {addDoctor,loginAdmin,allDoctors};
