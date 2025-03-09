@@ -94,7 +94,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '4 Years',
         about: 'Dr. Sharma has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 50,
+        fees: 500,
         address: {
             line1: '17th Cross, Richmond',
             line2: 'Circle, Ring Road, Mumbai'
@@ -108,7 +108,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '3 Years',
         about: 'Dr. Mehta is dedicated to providing top-notch gynecological care with a focus on women’s health, preventive screenings, and personalized treatment plans.',
-        fees: 60,
+        fees: 600,
         address: {
             line1: '27th Cross, Richmond',
             line2: 'Circle, Ring Road, Delhi'
@@ -122,7 +122,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '1 Year',
         about: 'Dr. Iyer specializes in skincare and dermatological treatments, with a focus on early diagnosis and customized skincare regimens.',
-        fees: 30,
+        fees: 300,
         address: {
             line1: '37th Cross, Richmond',
             line2: 'Circle, Ring Road, Bangalore'
@@ -136,7 +136,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '2 Years',
         about: 'Dr. Nair provides compassionate pediatric care, focusing on child health, nutrition, and preventive medical strategies.',
-        fees: 40,
+        fees: 400,
         address: {
             line1: '47th Cross, Richmond',
             line2: 'Circle, Ring Road, Hyderabad'
@@ -150,7 +150,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '4 Years',
         about: 'Dr. Deshmukh is an expert in neurological disorders, focusing on early intervention, personalized treatment, and research-driven care.',
-        fees: 50,
+        fees: 500,
         address: {
             line1: '57th Cross, Richmond',
             line2: 'Circle, Ring Road, Pune'
@@ -164,7 +164,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '4 Years',
         about: 'Dr. Verma is committed to providing top-quality neurological care with a patient-centered approach.',
-        fees: 50,
+        fees: 500,
         address: {
             line1: '57th Cross, Richmond',
             line2: 'Circle, Ring Road, Chennai'
@@ -178,7 +178,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '4 Years',
         about: 'Dr. Khanna focuses on preventive medicine and effective treatment strategies for general health concerns.',
-        fees: 50,
+        fees: 500,
         address: {
             line1: '17th Cross, Richmond',
             line2: 'Circle, Ring Road, Jaipur'
@@ -192,7 +192,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '3 Years',
         about: 'Dr. Kapoor specializes in women’s health, pregnancy care, and reproductive wellness.',
-        fees: 60,
+        fees: 600,
         address: {
             line1: '27th Cross, Richmond',
             line2: 'Circle, Ring Road, Kolkata'
@@ -206,7 +206,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '1 Year',
         about: 'Dr. Siddiqui provides expert skin care treatments with a focus on preventive and cosmetic dermatology.',
-        fees: 30,
+        fees: 300,
         address: {
             line1: '37th Cross, Richmond',
             line2: 'Circle, Ring Road, Lucknow'
@@ -220,7 +220,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '2 Years',
         about: 'Dr. Agarwal provides comprehensive pediatric care, focusing on child health and developmental well-being.',
-        fees: 40,
+        fees: 400,
         address: {
             line1: '47th Cross, Richmond',
             line2: 'Circle, Ring Road, Chandigarh'
@@ -234,7 +234,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '4 Years',
         about: 'Dr. Joshi specializes in treating neurological conditions with a patient-focused approach.',
-        fees: 50,
+        fees: 500,
         address: {
             line1: '57th Cross, Richmond',
             line2: 'Circle, Ring Road, Bhopal'
@@ -248,7 +248,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '4 Years',
         about: 'Dr. Menon is dedicated to providing advanced neurological treatments with a focus on research-based approaches.',
-        fees: 50,
+        fees: 500,
         address: {
             line1: '57th Cross, Richmond',
             line2: 'Circle, Ring Road, Kochi'
@@ -262,7 +262,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '4 Years',
         about: 'Dr. Saxena specializes in digestive health, gut disorders, and preventive gastroenterology.',
-        fees: 50,
+        fees: 500,
         address: {
             line1: '17th Cross, Richmond',
             line2: 'Circle, Ring Road, Ahmedabad'
@@ -276,7 +276,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '3 Years',
         about: 'Dr. Malhotra is an expert in gynecological treatments, prenatal care, and reproductive health.',
-        fees: 60,
+        fees: 600,
         address: {
             line1: '27th Cross, Richmond',
             line2: 'Circle, Ring Road, Surat'
@@ -290,7 +290,7 @@ export const doctors = [
         degree: 'MBBS',
         experience: '1 Year',
         about: 'Dr. Kaur provides expert dermatological care with a focus on skincare, hair treatments, and cosmetic procedures.',
-        fees: 30,
+        fees: 300,
         address: {
             line1: '37th Cross, Richmond',
             line2: 'Circle, Ring Road, Amritsar'
