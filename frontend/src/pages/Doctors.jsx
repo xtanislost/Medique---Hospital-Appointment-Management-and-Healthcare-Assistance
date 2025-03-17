@@ -8,7 +8,7 @@ const {speciality}=useParams()
 const [filterDoc, setFilterDoc] = useState([])
 const [showFilter, setShowFilter] = useState(false)
 const navigate=useNavigate()
-const {Doctors}=useContext(AppContext)
+const {doctors}=useContext(AppContext)
 
 const applyFilter = () => {
   if (speciality) {
