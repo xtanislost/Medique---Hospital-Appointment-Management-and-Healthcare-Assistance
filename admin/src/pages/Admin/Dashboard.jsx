@@ -4,8 +4,7 @@ import { AdminContext } from '../../context/AdminContext'
 import { AppContext } from '../../context/AppContext'
 
 const Dashboard = () => {
-
-  const { aToken, getDashData, cancelAppointment, dashData } = useContext(AdminContext)
+const { aToken, getDashData, cancelAppointment, dashData } = useContext(AdminContext)
   const { slotDateFormat } = useContext(AppContext)
 
   useEffect(() => {
