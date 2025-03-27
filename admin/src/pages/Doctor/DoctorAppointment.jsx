@@ -4,6 +4,9 @@ import { DoctorContext } from '../../context/DoctorContext'
 import { AppContext } from '../../context/AppContext'
 import { assets } from '../../assets/assets'
 
+console.log(assets.tick_icon);
+
+
 const DoctorAppointments = () => {
 
   const { dToken, appointments, getAppointments, cancelAppointment, completeAppointment } = useContext(DoctorContext)
