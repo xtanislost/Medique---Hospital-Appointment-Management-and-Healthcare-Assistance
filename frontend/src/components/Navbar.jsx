@@ -40,10 +40,7 @@ const Navbar = () => {
           <li className='py-1'>BLOG</li>
           <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
         </NavLink>
-        <NavLink to='/reviews' >
-          <li className='py-1'> REVIEWS</li>
-          <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
-        </NavLink>
+        
       </ul>
 
       <div className='flex items-center gap-4 '>
