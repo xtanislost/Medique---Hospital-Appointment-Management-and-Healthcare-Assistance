@@ -38,6 +38,9 @@ import Neurologist from './Neurologist.svg'
 import Pediatricians from './Pediatricians.svg'
 import hidePasswordIcon from './hidePasswordIcon.png'
 import showPasswordIcon from './showPasswordIcon.png'
+import healthy from './healthy.jpeg'
+import checkup from './checkup.jpg'
+import food from './food.jpeg'
 
 
 export const assets = {
@@ -59,7 +62,10 @@ export const assets = {
     stripe_logo,
     razorpay_logo,
     hidePasswordIcon,
-    showPasswordIcon,
+    showPasswordIcon,,
+    food,
+    healthy,
+    checkup,
 }
 
 export const specialityData = [
