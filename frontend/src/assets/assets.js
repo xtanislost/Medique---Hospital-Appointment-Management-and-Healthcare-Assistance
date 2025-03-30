@@ -62,7 +62,7 @@ export const assets = {
     stripe_logo,
     razorpay_logo,
     hidePasswordIcon,
-    showPasswordIcon,,
+    showPasswordIcon,
     food,
     healthy,
     checkup,
