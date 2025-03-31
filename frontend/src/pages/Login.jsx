@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
+import { Link } from "react-router-dom"; // Import Link for navigation
 
 const Login = () => {
   const { backendUrl, token, setToken } = useContext(AppContext);
@@ -18,31 +19,27 @@ const Login = () => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     try {
+      let data;
       if (state === "Sign Up") {
-        const { data } = await axios.post(backendUrl + "/api/user/register", {
+        const response = await axios.post(backendUrl + "/api/user/register", {
           name,
           password,
           email,
         });
-
-        if (data.success) {
-          localStorage.setItem("token", data.token);
-          setToken(data.token);
-        } else {
-          toast.error(data.message);
-        }
+        data = response.data;
       } else {
-        const { data } = await axios.post(backendUrl + "/api/user/login", {
+        const response = await axios.post(backendUrl + "/api/user/login", {
           password,
           email,
         });
+        data = response.data;
+      }
 
-        if (data.success) {
-          localStorage.setItem("token", data.token);
-          setToken(data.token);
-        } else {
-          toast.error(data.message);
-        }
+      if (data.success) {
+        localStorage.setItem("token", data.token);
+        setToken(data.token);
+      } else {
+        toast.error(data.message);
       }
     } catch (error) {
       toast.error(error.message);
@@ -109,6 +106,13 @@ const Login = () => {
             />
           </span>
         </div>
+        {state === "Login" && (
+          <div className="w-full text-right mt-1">
+            <Link to="/forgot-password" className="text-primary underline cursor-pointer">
+              Forgot Password?
+            </Link>
+          </div>
+        )}
         <button
           type="submit"
           className="bg-primary text-white w-full py-2 my-2 rounded-md text-base"

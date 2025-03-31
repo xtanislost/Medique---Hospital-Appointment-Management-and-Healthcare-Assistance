@@ -14,6 +14,7 @@ import patients_icon from './patients_icon.svg'
 import admin_new from './admin_new.svg'
 import hidePasswordIcon from './hidePasswordIcon.png'
 import showPasswordIcon from './showPasswordIcon.png'
+import blog from './blog.svg'
 
 export const assets = {
     add_icon,
@@ -32,4 +33,5 @@ export const assets = {
     admin_new,
     hidePasswordIcon,
     showPasswordIcon,
+    blog,
 }
