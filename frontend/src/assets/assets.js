@@ -41,6 +41,7 @@ import showPasswordIcon from './showPasswordIcon.png'
 import healthy from './healthy.jpeg'
 import checkup from './checkup.jpg'
 import food from './food.jpeg'
+import faq from './faq.png'
 
 
 export const assets = {
@@ -66,6 +67,7 @@ export const assets = {
     food,
     healthy,
     checkup,
+    faq,
 }
 
 export const specialityData = [
