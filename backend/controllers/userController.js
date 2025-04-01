@@ -1,13 +1,15 @@
-import validator from 'validator';
-import bcrypt from 'bcrypt';
-import userModel from '../models/userModel.js';
-import jwt from 'jsonwebtoken';
-import { v2 as cloudinary } from 'cloudinary';
-import doctorModel from '../models/doctorModel.js';
-import appointmentModel from '../models/appointmentModel.js';
-import nodemailer from 'nodemailer'; // For sending emails
-import { v4 as uuidv4 } from 'uuid';
-import dotenv from 'dotenv';
+import validator from "validator";
+import bcrypt from "bcrypt";
+import userModel from "../models/userModel.js";
+import jwt from "jsonwebtoken";
+import { v2 as cloudinary } from "cloudinary";
+import doctorModel from "../models/doctorModel.js";
+import appointmentModel from "../models/appointmentModel.js";
+import nodemailer from "nodemailer"; // For sending emails
+import { v4 as uuidv4 } from "uuid";
+import dotenv from "dotenv";
+import razorpay from "razorpay";
+import { resolveContent } from "nodemailer/lib/shared/index.js";
 
 //API to register user
 const registerUser = async (req, res) => {
@@ -15,16 +17,16 @@ const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !password || !email) {
-      return res.json({ success: false, message: 'Missing Details' });
+      return res.json({ success: false, message: "Missing Details" });
     }
 
     //validating email format
     if (!validator.isEmail(email)) {
-      return res.json({ success: false, message: 'Enter a valid email' });
+      return res.json({ success: false, message: "Enter a valid email" });
     }
     //validating strong password
     if (password.length < 8) {
-      return res.json({ success: false, message: 'Enter a strong password' });
+      return res.json({ success: false, message: "Enter a strong password" });
     }
 
     //Hashing user password
@@ -56,7 +58,7 @@ const loginUser = async (req, res) => {
     const user = await userModel.findOne({ email });
 
     if (!user) {
-      return res.json({ success: false, message: 'User does not exist.' });
+      return res.json({ success: false, message: "User does not exist." });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -65,7 +67,7 @@ const loginUser = async (req, res) => {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       res.json({ success: true, token });
     } else {
-      res.json({ success: false, message: 'Invalid Credentials.' });
+      res.json({ success: false, message: "Invalid Credentials." });
     }
   } catch (error) {
     console.log(error);
@@ -77,7 +79,7 @@ const loginUser = async (req, res) => {
 const getProfile = async (req, res) => {
   try {
     const { userId } = req.body;
-    const userData = await userModel.findById(userId).select('-password');
+    const userData = await userModel.findById(userId).select("-password");
 
     res.json({ success: true, userData });
   } catch (error) {
@@ -93,20 +95,28 @@ const updateProfile = async (req, res) => {
     const imageFile = req.file;
 
     if (!name || !phone || !dob || !gender) {
-      return res.json({ success: false, message: 'Data Missing' });
+      return res.json({ success: false, message: "Data Missing" });
     }
 
-    await userModel.findByIdAndUpdate(userId, { name, phone, address: JSON.parse(address), dob, gender });
+    await userModel.findByIdAndUpdate(userId, {
+      name,
+      phone,
+      address: JSON.parse(address),
+      dob,
+      gender,
+    });
 
     if (imageFile) {
       // upload image to cloudinary
-      const imageUpload = await cloudinary.uploader.upload(imageFile.path, { resource_type: 'image' });
+      const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
+        resource_type: "image",
+      });
       const imageURL = imageUpload.secure_url;
 
       await userModel.findByIdAndUpdate(userId, { image: imageURL });
     }
 
-    res.json({ success: true, message: 'Profile Updated' });
+    res.json({ success: true, message: "Profile Updated" });
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
@@ -118,10 +128,10 @@ const bookAppointment = async (req, res) => {
   try {
     const { userId, docId, slotDate, slotTime } = req.body;
 
-    const docData = await doctorModel.findById(docId).select('-password');
+    const docData = await doctorModel.findById(docId).select("-password");
 
     if (!docData.available) {
-      return res.json({ success: false, message: 'Doctors not available' });
+      return res.json({ success: false, message: "Doctors not available" });
     }
 
     let slots_booked = docData.slots_booked;
@@ -129,7 +139,7 @@ const bookAppointment = async (req, res) => {
     //checking for slots availability
     if (slots_booked[slotDate]) {
       if (slots_booked[slotDate].includes(slotTime)) {
-        return res.json({ success: false, message: 'Slots not available' });
+        return res.json({ success: false, message: "Slots not available" });
       } else {
         slots_booked[slotDate].push(slotTime);
       }
@@ -138,7 +148,7 @@ const bookAppointment = async (req, res) => {
       slots_booked[slotDate].push(slotTime);
     }
 
-    const userData = await userModel.findById(userId).select('-password');
+    const userData = await userModel.findById(userId).select("-password");
 
     delete docData.slots_booked;
 
@@ -159,7 +169,7 @@ const bookAppointment = async (req, res) => {
     // save new slots data in docData
     await doctorModel.findByIdAndUpdate(docId, { slots_booked });
 
-    res.json({ success: true, message: 'Appointment Booked' });
+    res.json({ success: true, message: "Appointment Booked" });
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
@@ -186,10 +196,12 @@ const cancelAppointment = async (req, res) => {
 
     // verify appointment user
     if (appointmentData.userId !== userId) {
-      return res.json({ success: false, message: 'Unauthorized action' });
+      return res.json({ success: false, message: "Unauthorized action" });
     }
 
-    await appointmentModel.findByIdAndUpdate(appointmentId, { cancelled: true });
+    await appointmentModel.findByIdAndUpdate(appointmentId, {
+      cancelled: true,
+    });
 
     // releasing doctor slot
     const { docId, slotDate, slotTime } = appointmentData;
@@ -198,16 +210,76 @@ const cancelAppointment = async (req, res) => {
 
     let slots_booked = doctorData.slots_booked;
 
-    slots_booked[slotDate] = slots_booked[slotDate].filter((e) => e !== slotTime);
+    slots_booked[slotDate] = slots_booked[slotDate].filter(
+      (e) => e !== slotTime
+    );
 
     await doctorModel.findByIdAndUpdate(docId, { slots_booked });
 
-    res.json({ success: true, message: 'Appointment Cancelled' });
+    res.json({ success: true, message: "Appointment Cancelled" });
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
+
+const razorpayInstance = new razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
+// API to make payment of appointment using razorpay
+
+const paymentRazorpay = async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+
+    const appointmentData = await appointmentModel.findById(appointmentId);
+
+    if (!appointmentData || appointmentData.cancelled) {
+      return res.json({
+        success: false,
+        message: "Appointment not found or cancelled",
+      });
+    }
+
+    // creating options for razorpay payment
+    const options = {
+      amount: appointmentData.amount * 10,
+      currency: process.env.CURRENCY,
+      receipt: appointmentId,
+    };
+
+    // creation of an order
+    const order = await razorpayInstance.orders.create(options);
+
+    res.json({ success: true, order });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+// API to verify payment of razorpay
+const verifyRazorpay = async (req,res) =>{
+  try {
+    const{razorpay_order_id} = req.body;
+    const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id)
+  
+    if (orderInfo.status === 'paid'){
+      await appointmentModel.findByIdAndUpdate(orderInfo.receipt,{payment:true})
+      res.json({success:true, message:"Payment Successful"})
+
+
+    }
+    else{
+      res.json({success:false, message:"Payment Failed"})
+    }
+
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+}
 
 // API to handle forgot password request
 const forgotPassword = async (req, res) => {
@@ -216,7 +288,9 @@ const forgotPassword = async (req, res) => {
   try {
     const user = await userModel.findOne({ email });
     if (!user) {
-      return res.status(404).json({ success: false, message: 'User not found with this email.' });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found with this email." });
     }
 
     // Generate OTP
@@ -232,7 +306,7 @@ const forgotPassword = async (req, res) => {
 
     // Send OTP via Email (replace with your email sending logic)
     const transporter = nodemailer.createTransport({
-      service: 'Gmail', // Replace with your email service
+      service: "Gmail", // Replace with your email service
       auth: {
         user: process.env.EMAIL_USER, // Your email address
         pass: process.env.EMAIL_PASS, // Your email password or app password
@@ -241,21 +315,23 @@ const forgotPassword = async (req, res) => {
 
     const mailOptions = {
       to: user.email,
-      subject: 'Password Reset OTP',
+      subject: "Password Reset OTP",
       text: `Your One-Time Password (OTP) for password reset is: ${otp}\n\nPlease enter this OTP in the password reset form. This OTP will expire in 10 minutes.\n`,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.log(error);
-        return res.status(500).json({ success: false, message: 'Could not send OTP email.' });
+        return res
+          .status(500)
+          .json({ success: false, message: "Could not send OTP email." });
       }
-      console.log('Email sent: ' + info.response);
-      res.status(200).json({ success: true, message: 'OTP sent to email.' });
+      console.log("Email sent: " + info.response);
+      res.status(200).json({ success: true, message: "OTP sent to email." });
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ success: false, message: 'Something went wrong.' });
+    res.status(500).json({ success: false, message: "Something went wrong." });
   }
 };
 
@@ -266,11 +342,19 @@ const verifyOTP = async (req, res) => {
   try {
     const user = await userModel.findOne({ email });
     if (!user) {
-      return res.status(404).json({ success: false, message: 'User not found with this email.' });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found with this email." });
     }
 
-    if (!user.resetPasswordOTP || user.resetPasswordOTPExpires < Date.now() || user.resetPasswordOTP !== otp) {
-      return res.status(400).json({ success: false, message: 'Invalid or expired OTP.' });
+    if (
+      !user.resetPasswordOTP ||
+      user.resetPasswordOTPExpires < Date.now() ||
+      user.resetPasswordOTP !== otp
+    ) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid or expired OTP." });
     }
 
     // OTP is valid
@@ -279,10 +363,12 @@ const verifyOTP = async (req, res) => {
     user.resetPasswordOTPExpires = undefined;
     await user.save();
 
-    res.status(200).json({ success: true, message: 'OTP verified successfully.' });
+    res
+      .status(200)
+      .json({ success: true, message: "OTP verified successfully." });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ success: false, message: 'Something went wrong.' });
+    res.status(500).json({ success: false, message: "Something went wrong." });
   }
 };
 
@@ -294,18 +380,35 @@ const resetPassword = async (req, res) => {
     const user = await userModel.findOne({ email }); // Find user by email
 
     if (!user) {
-      return res.status(404).json({ success: false, message: 'User not found.' });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found." });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     user.password = hashedPassword;
     await user.save();
 
-    res.status(200).json({ success: true, message: 'Password reset successfully.' });
+    res
+      .status(200)
+      .json({ success: true, message: "Password reset successfully." });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ success: false, message: 'Something went wrong.' });
+    res.status(500).json({ success: false, message: "Something went wrong." });
   }
 };
 
-export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment, forgotPassword,verifyOTP, resetPassword };
+export {
+  registerUser,
+  loginUser,
+  getProfile,
+  updateProfile,
+  bookAppointment,
+  listAppointment,
+  cancelAppointment,
+  paymentRazorpay,
+  verifyRazorpay,
+  forgotPassword,
+  verifyOTP,
+  resetPassword,
+};
