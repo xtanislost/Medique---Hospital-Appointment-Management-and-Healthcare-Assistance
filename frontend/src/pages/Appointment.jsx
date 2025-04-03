@@ -148,6 +148,7 @@ const Appointment = () => {
                         <p>{docInfo.degree} - {docInfo.speciality}</p>
                         <button className='py-0.5 px-2 border text-xs rounded-full'>{docInfo.experience}</button>
                     </div>
+                    <p className='text-[#262626] text-sm font-medium'>License Number: {docInfo.doctorLicenseNumber}</p>
 
                     {/* ----- Doc About ----- */}
                     <div>

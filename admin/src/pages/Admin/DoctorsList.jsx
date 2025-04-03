@@ -1,26 +1,90 @@
-import React, { useContext, useEffect } from "react"
-import { AdminContext } from "../../context/AdminContext"
+import React, { useContext, useEffect, useState } from "react";
+import { AdminContext } from "../../context/AdminContext";
 
 const DoctorsList = () => {
-  const { doctors, aToken, getAllDoctors, changeAvailability } = useContext(AdminContext)
+  const { doctors, aToken, getAllDoctors, changeAvailability } =
+    useContext(AdminContext);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [availabilityFilter, setAvailabilityFilter] = useState("all");
+  const [filteredDoctors, setFilteredDoctors] = useState([]);
 
   useEffect(() => {
     if (aToken) {
-      getAllDoctors()
+      getAllDoctors();
     }
-  }, [aToken])
+  }, [aToken]);
+
+  useEffect(() => {
+    let filtered = [...doctors];
+
+    // Filter by availability
+    if (availabilityFilter === "available") {
+      filtered = filtered.filter((doctor) => doctor.available);
+    } else if (availabilityFilter === "unavailable") {
+      filtered = filtered.filter((doctor) => !doctor.available);
+    }
+
+    // Filter by search query
+    if (searchQuery) {
+      const lowerCaseQuery = searchQuery.toLowerCase();
+      filtered = filtered.filter((doctor) =>
+        doctor.name.toLowerCase().includes(lowerCaseQuery) ||
+        doctor.speciality.toLowerCase().includes(lowerCaseQuery)
+      );
+    }
+
+    setFilteredDoctors(filtered);
+  }, [doctors, availabilityFilter, searchQuery]);
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleAvailabilityFilterChange = (e) => {
+    setAvailabilityFilter(e.target.value);
+  };
+
   return (
     <div className='m-5 max-h-[90vh] overflow-y-scroll'>
       <h1 className='text-lg font-medium'>All Doctors</h1>
+      <div className='flex items-center mb-4'>
+        <input
+          type="text"
+          placeholder="Search Doctor Name or Speciality"
+          className='border rounded py-2 px-3 mr-4'
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+        <select
+          className='border rounded py-2 px-3'
+          value={availabilityFilter}
+          onChange={handleAvailabilityFilterChange}
+        >
+          <option value="all">All Availability</option>
+          <option value="available">Available</option>
+          <option value="unavailable">Unavailable</option>
+        </select>
+      </div>
       <div className='w-full flex flex-wrap gap-4 pt-5 gap-y-6'>
-        {doctors.map((item, index) => (
-          <div className='border border-[#C9D8FF] rounded-xl max-w-56 overflow-hidden cursor-pointer group' key={index}>
-            <img className='bg-[#EAEFFF] group-hover:bg-primary transition-all duration-500' src={item.image} alt="" />
+        {filteredDoctors.map((item, index) => (
+          <div
+            className='border border-[#C9D8FF] rounded-xl max-w-56 overflow-hidden cursor-pointer group'
+            key={index}
+          >
+            <img
+              className='bg-[#EAEFFF] group-hover:bg-primary transition-all duration-500'
+              src={item.image}
+              alt=""
+            />
             <div className='p-4'>
               <p className='text-[#262626] text-lg font-medium'>{item.name}</p>
               <p className='text-[#5C5C5C] text-sm'>{item.speciality}</p>
               <div className='mt-2 flex items-center gap-1 text-sm'>
-                <input onChange={()=>changeAvailability(item._id)} type="checkbox" checked={item.available} />
+                <input
+                  onChange={() => changeAvailability(item._id)}
+                  type="checkbox"
+                  checked={item.available}
+                />
                 <p>Available</p>
               </div>
             </div>
@@ -28,7 +92,7 @@ const DoctorsList = () => {
         ))}
       </div>
     </div>
-  )
+  );
 };
 
-export default DoctorsList
+export default DoctorsList;
