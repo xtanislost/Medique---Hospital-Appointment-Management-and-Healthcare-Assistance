@@ -1,16 +1,13 @@
-import React from 'react'
-import { useContext, useEffect, useState } from 'react'
-import { DoctorContext } from '../../context/DoctorContext'
-import { AppContext } from '../../context/AppContext'
-import { assets } from '../../assets/assets'
-
-console.log(assets.tick_icon);
-
+import React from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { DoctorContext } from '../../context/DoctorContext';
+import { AppContext } from '../../context/AppContext';
+import { assets } from '../../assets/assets';
+import { Link } from 'react-router-dom';
 
 const DoctorAppointments = () => {
-
-    const { dToken, appointments, getAppointments, cancelAppointment, completeAppointment } = useContext(DoctorContext)
-    const { slotDateFormat, calculateAge, currency } = useContext(AppContext)
+    const { dToken, appointments, getAppointments, cancelAppointment, completeAppointment } = useContext(DoctorContext);
+    const { slotDateFormat, calculateAge, currency } = useContext(AppContext);
     const [filter, setFilter] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredAppointments, setFilteredAppointments] = useState([]);
@@ -24,7 +21,6 @@ const DoctorAppointments = () => {
     useEffect(() => {
         let filtered = [...appointments];
 
-        // Filter by status
         if (filter === 'cancelled') {
             filtered = filtered.filter(item => item.cancelled);
         } else if (filter === 'completed') {
@@ -33,7 +29,6 @@ const DoctorAppointments = () => {
             filtered = filtered.filter(item => !item.cancelled && !item.isCompleted);
         }
 
-        // Filter by search query
         if (searchQuery) {
             const lowerCaseQuery = searchQuery.toLowerCase();
             filtered = filtered.filter(item =>
@@ -54,7 +49,6 @@ const DoctorAppointments = () => {
 
     return (
         <div className='w-full max-w-6xl m-5 '>
-
             <p className='mb-3 text-lg font-medium'>All Appointments</p>
 
             <div className='flex items-center mb-4'>
@@ -78,7 +72,7 @@ const DoctorAppointments = () => {
             </div>
 
             <div className='bg-white border rounded text-sm max-h-[80vh] overflow-y-scroll'>
-                <div className='max-sm:hidden grid grid-cols-[0.5fr_2fr_1fr_1fr_3fr_1fr_1fr] gap-1 py-3 px-6 border-b'>
+                <div className='max-sm:hidden grid grid-cols-[0.5fr_2fr_1fr_1fr_2fr_1fr_1fr_1fr] gap-1 py-3 px-6 border-b'>
                     <p>#</p>
                     <p>Patient</p>
                     <p>Payment</p>
@@ -86,9 +80,10 @@ const DoctorAppointments = () => {
                     <p>Date & Time</p>
                     <p>Fees</p>
                     <p>Action</p>
+                    <p>Prescription</p>
                 </div>
                 {filteredAppointments.map((item, index) => (
-                    <div className='flex flex-wrap justify-between max-sm:gap-5 max-sm:text-base sm:grid grid-cols-[0.5fr_2fr_1fr_1fr_3fr_1fr_1fr] gap-1 items-center text-gray-500 py-3 px-6 border-b hover:bg-gray-50' key={index}>
+                    <div className='flex flex-wrap justify-between max-sm:gap-5 max-sm:text-base sm:grid grid-cols-[0.5fr_2fr_1fr_1fr_2fr_1fr_1fr_1fr] gap-1 items-center text-gray-500 py-3 px-6 border-b hover:bg-gray-50' key={index}>
                         <p className='max-sm:hidden'>{index + 1}</p>
                         <div className='flex items-center gap-2'>
                             <img src={item.userData.image} className='w-8 rounded-full' alt="" /> <p>{item.userData.name}</p>
@@ -110,12 +105,16 @@ const DoctorAppointments = () => {
                                     <img onClick={() => completeAppointment(item._id)} className='w-10 cursor-pointer' src={assets.tick_icon} alt="" />
                                 </div>
                         }
+                        <div>
+                            <Link to={`/prescription/${item._id}`} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-xs'>
+                                Prescription
+                            </Link>
+                        </div>
                     </div>
                 ))}
             </div>
-
         </div>
-    )
-}
+    );
+};
 
-export default DoctorAppointments
+export default DoctorAppointments;

@@ -7,6 +7,8 @@ import adminRouter from './routes/adminRoute.js'
 import doctorRouter from './routes/doctorRoute.js'
 import userRouter from './routes/userRoutes.js'
 import blogRouter from './routes/blogRouter.js'
+import reviewRouter from './routes/reviewRoute.js'
+
 
 
 
@@ -25,6 +27,8 @@ app.use('/api/admin', adminRouter)
 app.use('/api/doctor',doctorRouter)
 app.use('/api/user',userRouter)
 app.use('/api/blog', blogRouter)
+app.use('/api/review', reviewRouter)
+
 
 
 app.get('/',(req,res)=>{

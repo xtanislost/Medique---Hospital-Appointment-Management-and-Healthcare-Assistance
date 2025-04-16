@@ -17,6 +17,7 @@ import DoctorProfile from './pages/Doctor/DoctorProfile';
 import ManageBlogs from './pages/Admin/ManageBlogs';
 
 
+
 const App = () => {
 
   const { aToken } = useContext(AdminContext)
@@ -43,6 +44,8 @@ const App = () => {
           <Route path='/doctor-dashboard' element={<DoctorDashboard />} />
           <Route path='/doctor-appointments' element={<DoctorAppointment />} />
           <Route path='/doctor-profile' element={<DoctorProfile />} />
+          
+         
 
 
 

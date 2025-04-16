@@ -4,21 +4,22 @@ import { AppContext } from '../context/AppContext';
 import { doctors as allDoctorsData } from '../assets/assets'; // Renamed to avoid confusion with context
 
 const Doctors = () => {
-  const { speciality: urlSpeciality, doctorName: urlDoctorName, availability: urlAvailability } = useParams();
+  const { speciality: urlSpeciality } = useParams();
   const [filterDoc, setFilterDoc] = useState([]);
   const [showFilter, setShowFilter] = useState(false);
   const navigate = useNavigate();
   const { doctors } = useContext(AppContext);
   const [searchQuery, setSearchQuery] = useState('');
   const [availabilityFilter, setAvailabilityFilter] = useState('all');
+  const [activeSpeciality, setActiveSpeciality] = useState(urlSpeciality || 'all');
 
   const applyFilters = () => {
     let filteredDoctors = [...doctors];
 
-    // Filter by speciality from URL
-    if (urlSpeciality) {
+    // Filter by speciality
+    if (activeSpeciality !== 'all') {
       filteredDoctors = filteredDoctors.filter(
-        (doc) => doc.speciality.toLowerCase() === urlSpeciality.toLowerCase()
+        (doc) => doc.speciality.toLowerCase() === activeSpeciality.toLowerCase()
       );
     }
 
@@ -40,11 +41,16 @@ const Doctors = () => {
 
   useEffect(() => {
     applyFilters();
-  }, [doctors, urlSpeciality, searchQuery, availabilityFilter]);
+  }, [doctors, activeSpeciality, searchQuery, availabilityFilter]);
 
   const handleSpecialityChange = (spec) => {
-    const newPath = spec === 'all' ? '/doctors' : `/doctors/${spec}`;
-    navigate(newPath);
+    if (activeSpeciality === spec) {
+      setActiveSpeciality('all');
+      navigate('/doctors');
+    } else {
+      setActiveSpeciality(spec);
+      navigate(`/doctors/${spec}`);
+    }
   };
 
   const handleSearchChange = (e) => {
@@ -75,7 +81,7 @@ const Doctors = () => {
           <p
             onClick={() => handleSpecialityChange('General Physician')}
             className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${
-              urlSpeciality === 'General Physician' ? 'bg-[#E2E5FF] text-black ' : ''
+              activeSpeciality === 'General Physician' ? 'bg-[#E2E5FF] text-black ' : ''
             }`}
           >
             General Physician
@@ -83,7 +89,7 @@ const Doctors = () => {
           <p
             onClick={() => handleSpecialityChange('Gynecologist')}
             className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${
-              urlSpeciality === 'Gynecologist' ? 'bg-[#E2E5FF] text-black ' : ''
+              activeSpeciality === 'Gynecologist' ? 'bg-[#E2E5FF] text-black ' : ''
             }`}
           >
             Gynecologist
@@ -91,7 +97,7 @@ const Doctors = () => {
           <p
             onClick={() => handleSpecialityChange('Dermatologist')}
             className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${
-              urlSpeciality === 'Dermatologist' ? 'bg-[#E2E5FF] text-black ' : ''
+              activeSpeciality === 'Dermatologist' ? 'bg-[#E2E5FF] text-black ' : ''
             }`}
           >
             Dermatologist
@@ -99,7 +105,7 @@ const Doctors = () => {
           <p
             onClick={() => handleSpecialityChange('Pediatrician')}
             className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${
-              urlSpeciality === 'Pediatrician' ? 'bg-[#E2E5FF] text-black ' : ''
+              activeSpeciality === 'Pediatrician' ? 'bg-[#E2E5FF] text-black ' : ''
             }`}
           >
             Pediatrician
@@ -107,7 +113,7 @@ const Doctors = () => {
           <p
             onClick={() => handleSpecialityChange('Neurologist')}
             className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${
-              urlSpeciality === 'Neurologist' ? 'bg-[#E2E5FF] text-black ' : ''
+              activeSpeciality === 'Neurologist' ? 'bg-[#E2E5FF] text-black ' : ''
             }`}
           >
             Neurologist
@@ -115,14 +121,14 @@ const Doctors = () => {
           <p
             onClick={() => handleSpecialityChange('Gastroenterologist')}
             className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${
-              urlSpeciality === 'Gastroenterologist' ? 'bg-[#E2E5FF] text-black ' : ''
+              activeSpeciality === 'Gastroenterologist' ? 'bg-[#E2E5FF] text-black ' : ''
             }`}
           >
             Gastroenterologist
           </p>
         </div>
         <div className='w-full'>
-          <div className='mb-4'>
+          <div className='flex items-center gap-4 mb-4'>
             <input
               type="text"
               placeholder="Search Doctor Name"
@@ -130,14 +136,12 @@ const Doctors = () => {
               value={searchQuery}
               onChange={handleSearchChange}
             />
-          </div>
-          <div className='mb-4'>
             <select
-              className='border rounded py-2 px-3 w-full sm:w-64'
+              className='border rounded py-2 px-3 w-full sm:w-32'
               value={availabilityFilter}
               onChange={handleAvailabilityFilterChange}
             >
-              <option value="all">All Availability</option>
+              <option value="all">All</option>
               <option value="available">Available</option>
               <option value="unavailable">Not Available</option>
             </select>
