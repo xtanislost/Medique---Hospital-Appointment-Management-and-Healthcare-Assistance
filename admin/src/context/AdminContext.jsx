@@ -43,12 +43,12 @@ const AdminContextProvider = (props) => {
       else{
         toast.error(data.message);
       }
-      
+
     } catch (error) {
       toast.error(error.message);
-      
+
     }
-    
+
   }
 
   const getAllAppointments=async() => {
@@ -63,10 +63,10 @@ const AdminContextProvider = (props) => {
       }else{
         toast.error(data.message)
       }
-      
+
     } catch (error) {
       toast.error(error.message);
-      
+
     }
 
 
@@ -76,18 +76,18 @@ const AdminContextProvider = (props) => {
 
     try {
 
-        const { data } = await axios.post(backendUrl + '/api/admin/cancel-appointment', { appointmentId }, { headers: { aToken } })
+      const { data } = await axios.post(backendUrl + '/api/admin/cancel-appointment', { appointmentId }, { headers: { aToken } })
 
-        if (data.success) {
-            toast.success(data.message)
-            getAllAppointments()
-        } else {
-            toast.error(data.message)
-        }
+      if (data.success) {
+        toast.success(data.message)
+        getAllAppointments()
+      } else {
+        toast.error(data.message)
+      }
 
     } catch (error) {
-        toast.error(error.message)
-        console.log(error)
+      toast.error(error.message)
+      console.log(error)
     }
 
 }
@@ -96,23 +96,43 @@ const AdminContextProvider = (props) => {
 const getDashData = async () => {
   try {
 
-      const { data } = await axios.get(backendUrl + '/api/admin/dashboard', { headers: { aToken } })
+    const { data } = await axios.get(backendUrl + '/api/admin/dashboard', { headers: { aToken } })
 
-      if (data.success) {
-          setDashData(data.dashData)
-          console.log(data.dashData)
+    if (data.success) {
+      setDashData(data.dashData)
+      console.log(data.dashData)
 
-      } else {
-          toast.error(data.message)
-      }
+    } else {
+      toast.error(data.message)
+    }
 
   } catch (error) {
-      
-      toast.error(error.message)
+
+    toast.error(error.message)
   }
 
 }
 
+// API call to delete a doctor
+const deleteDoctor = async (doctorId) => {
+  try {
+    const { data } = await axios.post(
+      backendUrl + "/api/admin/delete-doctor",
+      { doctorId },
+      { headers: { aToken } }
+    );
+    if (data.success) {
+      toast.success(data.message);
+      return { success: true };
+    } else {
+      toast.error(data.message);
+      return { success: false, message: data.message };
+    }
+  } catch (error) {
+    toast.error(error.message);
+    return { success: false, message: error.message };
+  }
+};
 
 
   const value = {
@@ -126,6 +146,7 @@ const getDashData = async () => {
     getAllAppointments,
     cancelAppointment,
     dashData,getDashData,
+    deleteDoctor // Add the deleteDoctor function to the context value
   };
 
   return (
