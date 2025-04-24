@@ -9,6 +9,7 @@ const MyAppointments = () => {
   const [appointments, setAppointments] = useState([]);
   const [filteredAppointments, setFilteredAppointments] = useState([]);
   const [filterStatus, setFilterStatus] = useState("all"); // 'all', 'upcoming', 'cancelled', 'completed'
+  const [showCancelConfirm, setShowCancelConfirm] = useState(null); // Holds appointment ID for confirmation
   const months = [
     "",
     "Jan",
@@ -70,6 +71,23 @@ const MyAppointments = () => {
     }
   };
 
+  const handleInitiateCancel = (appointmentId, isPaid) => {
+    if (isPaid) {
+      setShowCancelConfirm({ id: appointmentId, isPaid: true });
+    } else {
+      cancelAppointment(appointmentId);
+    }
+  };
+
+  const handleConfirmCancel = (appointmentId) => {
+    cancelAppointment(appointmentId);
+    setShowCancelConfirm(null);
+  };
+
+  const handleCloseCancelConfirm = () => {
+    setShowCancelConfirm(null);
+  };
+
   const initPay = (order) => {
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
@@ -89,8 +107,8 @@ const MyAppointments = () => {
             { headers: { token } }
           );
           if (data.success) {
-            getUserAppointments()
-            navigate('/my-appointments')
+            getUserAppointments();
+            navigate("/my-appointments");
           }
         } catch (error) {
           console.log(error);
@@ -114,7 +132,7 @@ const MyAppointments = () => {
         initPay(data.order);
       }
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   };
 
@@ -211,8 +229,38 @@ const MyAppointments = () => {
           filteredAppointments.map((item, index) => (
             <div
               key={index}
-              className="grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap-6 py-2 border-b"
+              className="grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap-6 py-2 border-b relative" // Added relative for positioning confirm box
             >
+              {showCancelConfirm?.id === item._id && (
+                <div className="absolute top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-10">
+                  <div className="bg-white p-6 rounded-md shadow-md">
+                    <p className="text-lg font-semibold mb-2">Confirm Cancellation</p>
+                    <p className="text-gray-600 mb-4">
+                      Are you sure you want to cancel this appointment?
+                      {item.payment && (
+                        <>
+                          {" "}
+                          Your payment will be returned within 3 business days.
+                        </>
+                      )}
+                    </p>
+                    <div className="flex justify-end gap-2">
+                      <button
+                        onClick={handleCloseCancelConfirm}
+                        className="px-4 py-2 rounded border text-gray-700 hover:bg-gray-100"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={() => handleConfirmCancel(item._id)}
+                        className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
+                      >
+                        Confirm
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
               <div>
                 <img
                   className="w-32 bg-indigo-50"
@@ -237,8 +285,12 @@ const MyAppointments = () => {
               </div>
               <div></div>
               <div className="flex flex-col gap-2 justify-end">
-                {!item.cancelled && item.payment && !item.isCompleted && <button className='sm:min-w-48 py-2 border rounded text-stone-500 bg-indigo-50'>Paid</button> }
-                {!item.cancelled && !item.isCompleted && !item.payment &&  (
+                {!item.cancelled && item.payment && !item.isCompleted && (
+                  <button className="sm:min-w-48 py-2 border rounded text-stone-500 bg-indigo-50">
+                    Paid
+                  </button>
+                )}
+                {!item.cancelled && !item.isCompleted && !item.payment && (
                   <button
                     onClick={() => appointmentRazorpay(item._id)}
                     className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-300"
@@ -246,9 +298,9 @@ const MyAppointments = () => {
                     Pay Online
                   </button>
                 )}
-                {!item.cancelled && !item.isCompleted &&(
+                {!item.cancelled && !item.isCompleted && (
                   <button
-                    onClick={() => cancelAppointment(item._id)}
+                    onClick={() => handleInitiateCancel(item._id, item.payment)}
                     className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-red-600 hover:text-white transition-all duration-300"
                   >
                     Cancel appointment
